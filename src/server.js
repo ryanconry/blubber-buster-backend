@@ -1,57 +1,19 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
-const { ExerciseClass } = require('./constants')
+const mongoose = require('mongoose');
+const GraphQLSchema = require('./schemas/GraphQLSchema');
+const { rootResolvers } = require('./resolvers');
 
+mongoose.connect('mongodb://localhost:27017/exercises', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Construct a schema, using GraphQL schema language
-const schema = buildSchema(`
-  type ExerciseClass {
-    getExercise: Exercise
-  }
-
-  type Exercise {
-    id: Int
-    name: String
-    movement: String
-    type: String
-    sets: Int
-    reps: Int
-    superset(bodyPart: String): ExerciseClass
-  }
-
-  type Query {
-    chestExercise: ExerciseClass 
-    legExercise: ExerciseClass
-    shoulderExercise: ExerciseClass
-    armExercise: ExerciseClass
-    backExercise: ExerciseClass
-  }
-`);
-
-// The root provides a resolver function for each API endpoint
-const root = {
-  chestExercise: () => {
-    return new ExerciseClass('chest')
-  },
-  legExercise: () => {
-    return new ExerciseClass('legs')
-  },
-  shoulderExercise: () => {
-    return new ExerciseClass('shoulders')
-  },
-  armExercise: () => {
-    return new ExerciseClass('arms')
-  },
-  backExercise: () => {
-    return new ExerciseClass('back')
-  }
-};
+mongoose.connection.once('open', () => {
+  console.log('conneted to database');
+});
 
 const app = express();
 app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
+  schema: GraphQLSchema,
+  rootValue: rootResolvers,
   graphiql: true,
 }));
 app.listen(4000);
