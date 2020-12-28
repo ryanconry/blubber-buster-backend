@@ -7,7 +7,7 @@ const buttonStyling = {
   margin: "12px"
 };
 
-export const FormComponent: React.FC<FormProps> = ({ exerciseTypes, exerciseState, setExerciseState, submitRequest, areResultsShown }) => {
+export const FormComponent: React.FC<FormProps> = ({ exerciseTypes, exerciseState, setExerciseState, submitRequest, areResultsShown, isExerciseStateEmtpy }) => {
   // Change the state for the triggered input while maintaining other input state
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setExerciseState({
@@ -15,6 +15,7 @@ export const FormComponent: React.FC<FormProps> = ({ exerciseTypes, exerciseStat
       [event.target.id]: event.target.checked
     });
   }
+
   return (
     <>
       <h4>What body parts would you like to exercise?</h4>
@@ -27,7 +28,7 @@ export const FormComponent: React.FC<FormProps> = ({ exerciseTypes, exerciseStat
           Clear Results
         </Button>
         ) : (
-          <Button style={buttonStyling} variant="primary" onClick={() => submitRequest(true)}>
+          <Button style={buttonStyling} variant="primary" disabled={isExerciseStateEmtpy} onClick={() => submitRequest(true)}>
           Get Workout!
         </Button>
         )}
