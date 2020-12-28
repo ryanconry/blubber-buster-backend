@@ -17,14 +17,16 @@ app.use(cors());
 app.use('/graphql', graphqlHTTP({
   schema: GraphQLSchema,
   rootValue: rootResolvers,
-  graphiql: true,
+  // graphiql: true,
 }));
 
 app.use(express.static('public'));
 
 app.get('*', (req,res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+  res.sendFile(path.resolve(__dirname, '../public/index.html'))
 })
 
-app.listen(4000);
+const PORT = process.env.PORT || 4000
+
+app.listen(PORT);
 console.log('Running a GraphQL API server at localhost:4000/graphql');
