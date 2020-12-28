@@ -8,7 +8,7 @@ const { rootResolvers } = require('./resolvers');
 mongoose.connect('mongodb+srv://burlyboi:burlyboi@cluster0.jm4nl.mongodb.net/exercises?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.once('open', () => {
-  console.log('conneted to database');
+  console.log('Conneted to MongoDB Atlas server.');
 });
 
 const app = express();
