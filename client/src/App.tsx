@@ -18,6 +18,9 @@ const App: React.FC = () => {
     return initialState;
   });
 
+  const exercisesToQuery = exerciseTypes.filter((type) => exerciseState[type]);
+  const isExerciseStateEmtpy = exercisesToQuery.length === 0;
+
   return (
     <Container>
       <div className="App" style={{ marginTop: "16px" }}>
@@ -29,13 +32,14 @@ const App: React.FC = () => {
             setExerciseState={setExerciseState}
             submitRequest={setShowResults}
             areResultsShown={showResults}
+            isExerciseStateEmtpy={isExerciseStateEmtpy}
           />
         </BBRow>
-        {showResults && (
+        {showResults && !isExerciseStateEmtpy && (
           <BBRow>
             <h4>Here is your custom exercise!</h4>
             <p>Toggle the checkboxes to request different exercises.</p>
-            <Results exercisesToQuery={exerciseTypes.filter((type) => exerciseState[type])} />
+            <Results exercisesToQuery={exercisesToQuery} />
           </BBRow>
         )
         }

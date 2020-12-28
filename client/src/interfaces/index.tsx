@@ -8,6 +8,7 @@ export type FormProps = {
   setExerciseState: (arg0: exerciseAttribute) => void;
   submitRequest: (arg0: boolean) => void;
   areResultsShown: boolean;
+  isExerciseStateEmtpy: boolean;
 };
 
 export type ExerciseResponseAttributes = {
