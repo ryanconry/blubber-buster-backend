@@ -28,7 +28,9 @@ const defaultOptions: DefaultOptions  = {
 // Initialize ApolloClient
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'http://localhost:4000/graphql',
+  // For development
+  // uri: 'http://localhost:4000/graphql',
+  uri: '/graphql',
   defaultOptions
 });
 
